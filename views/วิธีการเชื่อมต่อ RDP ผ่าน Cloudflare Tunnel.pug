@@ -1,0 +1,101 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        style.
+            body {
+                background-color: black;
+                color: white;
+                font-family: monospace;
+            }
+            a, a:visited, a:active {
+                color: white;
+                text-decoration: none;
+            }
+            a:hover, code:hover {
+                background-color: white;
+                color: black;
+            }
+
+    body 
+        div(style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;")
+            div(style="width: 80%; height: 80%; border: 1px solid white; padding: 1rem;")
+                h1(style="text-align: center;") #{title}
+                div(style="text-align: left;")
+                    a(href="/") ▶ กลับไปหน้าแรก
+                div(style="text-align: left;")
+                    h2 วิธีการเชื่อมต่อ RDP ผ่าน Cloudflare Tunnel
+                    h3 โหลด Cloudflare Tunnel จากนี้ <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation">https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation</a>  
+                    br
+                    h2 Server ที่ใช้ในการทดสอบ Windows 10 Pro 64-bit
+                    h3 สิ่งที่ต้องตทำก่อนหน้านั้น
+                    h3 - สร้าง Tunnel ใน https://one.dash.cloudflare.com/
+                    h3 - กำหนด Public Hostname และ Private Hostname
+                    h3 - สร้าง RDP ใน Public Hostname แล้วกำหนด Proxy 
+                    br
+                    h2 เปิด Cloudflared Access เพื่อเชื่อม RDP ไปยัง Server
+                    pre(style="border: 1px solid white; overflow-x: auto; padding: 1rem;") 
+                        code(style="cursor: pointer;") cloudflared access rdp --hostname |Public| --url |Private|
+                    h3 Public คือ ชื่อที่เราตั้งไว้ใน https://one.dash.cloudflare.com/ อย่างเช่น rdp.sycer.network
+                    h3 Private คือ ชื่อ Host ต้องการให้ RDP เชื่อม เช่น localhost:3389 <text style="color: yellow">*กรณีที่ Port 3389 ถูกใช้งานอยู่ให้เปลี่ยน Port ใหม่ได้ เช่น localhost:3390</text>
+                    h3 รวมแล้วจะได้ 
+                    pre(style="border: 1px solid white; overflow-x: auto; padding: 1rem;") 
+                        code(style="cursor: pointer;") cloudflared access rdp --hostname rdp.sycer.network --url localhost:3389
+                    
+                    h3 หลังจากนั้นจะมีข้อความแสดงในหน้าต่าง Command Prompt แสดงว่าเชื่อมต่อสำเร็จ
+                    pre(style="border: 1px solid white; overflow-x: auto; padding: 1rem;") 
+                        code(id="i",style="cursor: pointer;") ------------------ Loading Cloudflared Output ------------------
+        script.
+            const code = document.querySelectorAll('code');
+            code.forEach((item) => {
+                item.addEventListener('click', () => {
+                    navigator.clipboard.writeText(item.innerText);
+                    const toast = document.createElement('div');
+                    toast.style.position = 'fixed';
+                    toast.style.top = '0';
+                    toast.style.left = '0';
+                    toast.style.width = '100%';
+                    toast.style.height = '100%';
+                    toast.style.display = 'flex';
+                    toast.style.justifyContent = 'center';
+                    toast.style.alignItems = 'center';
+                    toast.style.zIndex = '9999';
+                    toast.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                    toast.style.color = 'white';
+                    toast.style.fontSize = '1.5rem';
+                    toast.style.fontWeight = 'bold';
+                    toast.style.transition = 'all 0.5s ease-in-out';
+                    toast.style.opacity = '0';
+                    toast.innerText = 'Copied!';
+                    document.body.appendChild(toast);
+                    setTimeout(() => {
+                        toast.style.opacity = '1';
+                    }, 100);
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(toast);
+                        }, 500);
+                    }, 2000);
+                });
+            });
+        script.
+            setInterval(() => {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+                const second = date.getSeconds();
+                const millisecond = date.getMilliseconds();
+                const timezone = date.getTimezoneOffset();
+                const timezoneHour = Math.floor(timezone / 60);
+                const timezoneMinute = timezone % 60;
+                const timezoneString = timezoneHour.toString().padStart(2, '0') + ':' + timezoneMinute.toString().padStart(2, '0');
+                const dateString = year + '-' + month.toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0') + 'T' + hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0') + ':' + second.toString().padStart(2, '0') + 'Z';
+                document.getElementById('i').innerHTML = "<text style='color: grey'>"+ dateString +"</text><text style='color: green'> INF</text> Start Websocket listener <text style='color: aqua'>host=</text>localhost:3390";
+            }, 1000);

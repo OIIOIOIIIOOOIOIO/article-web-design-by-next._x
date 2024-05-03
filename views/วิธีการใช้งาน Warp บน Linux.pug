@@ -1,0 +1,65 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        style.
+            body {
+                background-color: black;
+                color: white;
+                font-family: monospace;
+            }
+            a, a:visited, a:active {
+                color: white;
+                text-decoration: none;
+            }
+            a:hover, code:hover {
+                background-color: white;
+                color: black;
+            }
+
+    body 
+        div(style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;")
+            div(style="width: 80%; height: 80%; border: 1px solid white; padding: 1rem;")
+                h1(style="text-align: center;") #{title}
+                div(style="text-align: left;")
+                    a(href="/") ▶ กลับไปหน้าแรก
+                div(style="text-align: left;")
+                    h2 วิธีการใช้งาน Warp หรือ 1.1.1.1 บน Linux
+
+        script.
+            const code = document.querySelectorAll('code');
+            code.forEach((item) => {
+                item.addEventListener('click', () => {
+                    navigator.clipboard.writeText(item.innerText);
+                    const toast = document.createElement('div');
+                    toast.style.position = 'fixed';
+                    toast.style.top = '0';
+                    toast.style.left = '0';
+                    toast.style.width = '100%';
+                    toast.style.height = '100%';
+                    toast.style.display = 'flex';
+                    toast.style.justifyContent = 'center';
+                    toast.style.alignItems = 'center';
+                    toast.style.zIndex = '9999';
+                    toast.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                    toast.style.color = 'white';
+                    toast.style.fontSize = '1.5rem';
+                    toast.style.fontWeight = 'bold';
+                    toast.style.transition = 'all 0.5s ease-in-out';
+                    toast.style.opacity = '0';
+                    toast.innerText = 'Copied!';
+                    document.body.appendChild(toast);
+                    setTimeout(() => {
+                        toast.style.opacity = '1';
+                    }, 100);
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(toast);
+                        }, 500);
+                    }, 2000);
+                });
+            });

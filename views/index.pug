@@ -1,0 +1,51 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Docs SycerNetwork
+        style.
+            body {
+                background-color: black;
+                color: white;
+                font-family: monospace;
+            }
+            a, a:visited, a:active {
+                color: white;
+                text-decoration: none;
+            }
+            a:hover, code:hover {
+                background-color: white;
+                color: black;
+            }
+            h2 {
+                margin-bottom: 0;
+            }
+            @media screen and (min-width: 768px) {
+                h2 {
+                    font-size: 1.5rem;
+                }
+            }
+            @media screen and (max-width: 600px) {
+                h2 {
+                    font-size: 0.9rem;
+                }
+            }
+    body 
+        div(style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;")
+            div(style="width: 80%; height: 80%; border: 1px solid white; padding: 1rem;")
+                h1(style="text-align: center;") เนื้อหาสนับสนุน ทางเทคนิค และการใช้งาน SycerNetwork
+
+                p(style="text-align: center;") หากมีข้อสงสัย หรือต้องการข้อมูลเพิ่มเติม สามารถติดต่อเราได้ที่
+                p(style="text-align: center;")
+                    a(href="https://discord.gg/TBVGMTBCzW") Discord
+                    |  หรือ 
+                    a(href="https://www.facebook.com/SycerNetwork") Facebook
+                dev(style="display: flex; flex-direction: column; align-items: flex-start;")
+                    each datas in data
+                        if datas == 'index'
+                            h2 <a href="/">&nbsp;<text style="color: black;">▶</text> หน้าหลัก</a>
+                        else
+                            h2 <a href="#{datas}">&nbsp;<text style="color: black;">▶</text> #{datas}</a> 
+            
